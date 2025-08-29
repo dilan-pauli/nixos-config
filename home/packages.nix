@@ -9,6 +9,7 @@
       xfce.thunar        # File manager
       btop               # System monitor
       lm_sensors         # Hardware sensors
+      nvtopPackages.nvidia # GPU monitoring for btop
     ]) ++
     
     # CLI Tools (Stable) - themed with Catppuccin
@@ -45,6 +46,7 @@
       grim               # Wayland screenshot tool
       slurp              # Screen area selection
       wl-clipboard       # Wayland clipboard
+      cliphist           # Clipboard history manager
       loupe              # Image viewer
       cider              # Apple Music client
     ]) ++

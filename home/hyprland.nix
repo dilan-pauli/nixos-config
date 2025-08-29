@@ -45,6 +45,8 @@ in # This is the end of the 'let' block and the start of your main config
         "waybar"
         "swww init"  # Initialize swww daemon
         "wallpaper-rotate"  # Set random wallpaper at startup
+        "wl-paste --type text --watch cliphist store"  # Start clipboard history daemon
+        "wl-paste --type image --watch cliphist store"  # Store image clipboard items
         "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'"  # Set GTK dark theme
         "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"  # Set color scheme preference
       ];
@@ -94,6 +96,9 @@ in # This is the end of the 'let' block and the start of your main config
 
         # -- Keybinding Helper --
         "$mainMod, slash, exec, hypr-keybinds"
+
+        # -- Clipboard Manager --
+        "$mainMod, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
 
         # -- Workspace Navigation --
         "$mainMod, 1, workspace, 1"

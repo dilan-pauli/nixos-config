@@ -1,17 +1,19 @@
 # home/waybar.nix
-{pkgs, theme, ...}:
+{pkgs, pkgs-unstable, theme, ...}:
 {
   programs.waybar = {
     enable = true;
+    package = pkgs-unstable.waybar;
     settings = {
       mainBar = {
         layer = "top";
         position = "top";
-        height = 30;
+        height = 36;
         spacing = 4;
-        modules-left = [ "hyprland/workspaces" "mpris" "custom/lametric-music" ];
+        reload_style_on_change = true;
+        modules-left = [ "hyprland/workspaces" "mpris" "custom/music-viz" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "pulseaudio" "network" "cpu" "memory" "custom/temps" "clock" "tray" ];
+        modules-right = [ "custom/services" "custom/weather" "pulseaudio" "network" "cpu" "memory" "custom/temps" "clock" "tray" ];
 
         "hyprland/workspaces" = {
           "format" = "{id}";
@@ -22,7 +24,6 @@
             "urgent" = "";
           };
           "sort-by-number" = true;
-          "swap-icon-label" = false;
         };
         
         "hyprland/window" = {
@@ -62,14 +63,14 @@
 
         "cpu" = {
           "format" = "󰻠 {usage}%";
-          "interval" = 2;
+          "interval" = 5;
           "tooltip" = true;
           "on-click" = "kitty -e btop";
         };
 
         "memory" = {
           "format" = "󰍛 {}%";
-          "interval" = 5;
+          "interval" = 10;
           "tooltip" = true;
           "on-click" = "kitty -e bash -c 'free -h; read'";
         };
@@ -77,10 +78,38 @@
         "custom/temps" = {
           "exec" = "waybar-temps";
           "format" = "{}";
-          "interval" = 5;
+          "interval" = 10;
           "tooltip" = true;
           "tooltip-format" = "CPU and GPU Temperatures";
           "on-click" = "kitty -e bash -c 'sensors; read'";
+        };
+
+        "custom/services" = {
+          "exec" = "waybar-services";
+          "format" = "{}";
+          "interval" = 30;
+          "tooltip" = true;
+          "tooltip-format" = "Service Status (🤖=Ollama)";
+          "on-click" = "kitty -e bash -c 'systemctl --no-pager status ollama; read'";
+        };
+
+        "custom/weather" = {
+          "exec" = "waybar-weather";
+          "format" = "{}";
+          "interval" = 900;
+          "tooltip" = true;
+          "tooltip-format" = "Weather Information (Updates every 15min)";
+          "on-click" = "xdg-open https://wttr.in/";
+        };
+
+        "custom/music-viz" = {
+          "exec" = "waybar-music-viz";
+          "format" = "{}";
+          "interval" = 1;
+          "tooltip" = false;
+          "on-click" = "playerctl play-pause";
+          "on-scroll-up" = "playerctl next";
+          "on-scroll-down" = "playerctl previous";
         };
         
         "clock" = {
@@ -106,17 +135,6 @@
           "spacing" = 10;
         };
 
-        "custom/lametric-music" = {
-          "format" = "♪ {}";
-          "exec" = "echo 'LaMetric'";
-          "interval" = "once";
-          "tooltip" = true;
-          "tooltip-format" = "LaMetric Music Controls - Click for options";
-          "on-click" = "lametric-music play";
-          "on-click-right" = "lametric-music stop";
-          "on-scroll-up" = "lametric-music next";
-          "on-scroll-down" = "lametric-music prev";
-        };
       };
     };
     # Clean and elegant styling with Catppuccin
@@ -124,8 +142,9 @@
       @import "catppuccin.css";
       
       * {
-        font-family: "JetBrainsMono Nerd Font";
-        font-size: 13px;
+        font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", "Inter", "Noto Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
         min-height: 0;
         border: none;
       }
@@ -156,7 +175,8 @@
       }
 
       #cpu, #memory, #custom-temps, #pulseaudio, 
-      #network, #clock, #mpris, #custom-lametric-music {
+      #network, #clock, #mpris, #custom-services,
+      #custom-weather, #custom-music-viz {
         padding: 4px 10px;
         margin: 4px 3px;
         background: @surface0;
