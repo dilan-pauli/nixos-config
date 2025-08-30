@@ -69,5 +69,17 @@
     # Communication (Unstable)
     (with pkgs-unstable; [
       discord            # Voice and text chat
+    ]) ++
+    
+    # Audio Production Tools (Mixed)
+    (with pkgs; [
+      audacity           # Free audio editor
+      sox                # Sound processing library
+      alsa-utils         # ALSA utilities (PipeWire compatible)
+    ]) ++
+    (with pkgs-unstable; [
+      reaper             # Professional DAW
+      ffmpeg-full        # Comprehensive media conversion
+      vlc                # Media player with codec support
     ]);
 }
