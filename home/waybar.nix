@@ -13,7 +13,7 @@
         reload_style_on_change = true;
         modules-left = [ "hyprland/workspaces" "mpris" "custom/music-viz" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "custom/services" "custom/weather" "pulseaudio" "network" "cpu" "memory" "custom/temps" "clock" "tray" ];
+        modules-right = [ "custom/services" "custom/weather" "custom/vpn" "pulseaudio" "network" "cpu" "memory" "custom/temps" "clock" "tray" ];
 
         "hyprland/workspaces" = {
           "format" = "{id}";
@@ -33,14 +33,13 @@
         };
 
         "mpris" = {
-          "format" = "{player_icon} {title} - {artist}";
-          "format-paused" = " {title}";
+          "format" = "{player_icon}";
+          "format-paused" = "";
           "format-stopped" = "";
           "player-icons" = {
             "default" = "";
             "mpv" = "🎵";
           };
-          "max-length" = 40;
           "on-click" = "playerctl play-pause";
           "tooltip-format" = "{player}: {title} - {artist}";
         };
@@ -55,10 +54,10 @@
         };
 
         "network" = {
-          "format-wifi" = " {essid}";
-          "format-ethernet" = "";
-          "format-disconnected" = "";
-          "tooltip-format" = "{ifname} via {gwaddr}";
+          "format-wifi" = " ";
+          "format-ethernet" = "󰈀";
+          "format-disconnected" = "󰌙";
+          "tooltip-format" = "{ifname}: {essid} via {gwaddr}";
         };
 
         "cpu" = {
@@ -110,6 +109,15 @@
           "on-click" = "playerctl play-pause";
           "on-scroll-up" = "playerctl next";
           "on-scroll-down" = "playerctl previous";
+        };
+
+        "custom/vpn" = {
+          "exec" = "waybar-vpn";
+          "format" = "{}";
+          "interval" = 5;
+          "tooltip" = true;
+          "tooltip-format" = "VPN Status - Click to toggle";
+          "on-click" = "kitty -e bash -c 'if nmcli connection show --active | grep -q be-bru.prod.surfshark.comsurfshark_openvpn_udp; then vpn disconnect; else vpn connect; fi; read'";
         };
         
         "clock" = {
@@ -176,7 +184,7 @@
 
       #cpu, #memory, #custom-temps, #pulseaudio, 
       #network, #clock, #mpris, #custom-services,
-      #custom-weather, #custom-music-viz {
+      #custom-weather, #custom-music-viz, #custom-vpn {
         padding: 4px 10px;
         margin: 4px 3px;
         background: @surface0;

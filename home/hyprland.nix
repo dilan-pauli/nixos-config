@@ -155,6 +155,10 @@ in # This is the end of the 'let' block and the start of your main config
       # Window rules - automatically assign applications to specific workspaces
       windowrulev2 = [
         "workspace 2,class:^(brave-browser)$"
+        "workspace 1,class:^(Godot)$"
+        "workspace 1,class:^(godot)$"
+        "tile,class:^(Godot)$"
+        "tile,class:^(godot)$"
       ];
     };
   };

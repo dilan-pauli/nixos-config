@@ -17,6 +17,36 @@
   # Networking
   networking.hostName = "larry-desktop";
   networking.networkmanager.enable = true; # GUI network management
+  networking.networkmanager.plugins = with pkgs; [
+    networkmanager-openvpn
+    networkmanager-openconnect
+  ];
+  
+  # Disable IPv6 to prevent VPN leaks
+  networking.enableIPv6 = false;
+  
+  # DNS resolution service for caching and security
+  services.resolved.enable = true;
+  
+  # Enable UPower for power management information
+  services.upower.enable = true;
+
+  # Printing services - CUPS with Brother printer support
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      brlaser              # Brother laser printer driver (open source)
+      brgenml1lpr          # Brother generic LPR driver
+      brgenml1cupswrapper  # Brother generic CUPS wrapper
+    ];
+  };
+  
+  # Enable network printer discovery
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 
   # Timezone and Locale
   time.timeZone = "Europe/London";
@@ -129,9 +159,30 @@
     nvidiaSettings = true; # Include nvidia-settings GUI
     package = config.boot.kernelPackages.nvidiaPackages.stable; # Stable driver version
     
-    # Enable power management for GPU control
+    # Enable power management and persistence for GPU control
     powerManagement.enable = true;
+    powerManagement.finegrained = false;
   };
+
+  # Enable swap for better memory pressure handling
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 8*1024; # 8GB swap file
+  } ];
+
+  # Fix NVIDIA device node creation
+  services.udev.extraRules = ''
+    KERNEL=="nvidia_uvm", OWNER="root", GROUP="video", MODE="0660"
+    KERNEL=="nvidia*", OWNER="root", GROUP="video", MODE="0660"
+    KERNEL=="nvidiactl", OWNER="root", GROUP="video", MODE="0660"
+  '';
+
+  # Ensure NFS state directories exist
+  systemd.tmpfiles.rules = [
+    "d /var/lib/nfs 0755 root root"
+    "d /var/lib/nfs/sm 0755 root root"
+    "d /var/lib/nfs/sm.bak 0755 root root"
+  ];
 
   # GPU clock speed configuration via systemd service
   systemd.services.gpu-undervolt = {

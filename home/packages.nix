@@ -39,6 +39,7 @@
     # Development Tools (Unstable - Latest Features)
     (with pkgs-unstable; [
       claude-code        # AI coding assistant
+      godot_4            # Game development engine
     ]) ++
     
     # Media and Screenshot Tools (Unstable)

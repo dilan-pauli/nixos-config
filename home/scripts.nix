@@ -447,6 +447,51 @@ EOF
       exit 1
     fi
   '';
+
+
+  # VPN quick connect/disconnect script
+  vpnScript = pkgs.writeShellScriptBin "vpn" ''
+    #!/usr/bin/env bash
+    
+    case "$1" in
+      connect)
+        echo "Connecting to Belgium VPN..."
+        nmcli --ask connection up "be-bru.prod.surfshark.comsurfshark_openvpn_udp"
+        ;;
+      disconnect)
+        echo "Disconnecting from VPN..."
+        nmcli connection down "be-bru.prod.surfshark.comsurfshark_openvpn_udp"
+        echo "✓ Disconnected from VPN"
+        ;;
+      status)
+        active_vpn=$(nmcli connection show --active | grep "be-bru.prod.surfshark.comsurfshark_openvpn_udp" | awk '{print $1}' | head -1)
+        if [ -n "$active_vpn" ]; then
+          echo "✓ Connected to Belgium"
+        else
+          echo "✗ Disconnected"
+        fi
+        ;;
+      *)
+        echo "Usage: vpn {connect|disconnect|status}"
+        echo "Examples:"
+        echo "  vpn connect     # Connect to Belgium server"
+        echo "  vpn disconnect  # Disconnect from VPN"
+        echo "  vpn status      # Show connection status"
+        ;;
+    esac
+  '';
+
+  # Waybar VPN status widget script
+  waybarVpnScript = pkgs.writeShellScriptBin "waybar-vpn" ''
+    #!/usr/bin/env bash
+    
+    # Check if VPN is connected
+    if nmcli connection show --active | grep -q "be-bru.prod.surfshark.comsurfshark_openvpn_udp"; then
+      echo "🛡️ BE"
+    else
+      echo "🔓"
+    fi
+  '';
   
 in
 {
@@ -462,5 +507,7 @@ in
     serviceStatusScript
     musicVisualizerScript
     weatherScript
+    waybarVpnScript
+    vpnScript
   ];
 }
