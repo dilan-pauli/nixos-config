@@ -313,7 +313,7 @@ EOF
     
     # Services to monitor
     declare -A services=(
-      ["ollama"]="🤖"
+      # ["ollama"]="🤖"
     )
     
     active_services=""

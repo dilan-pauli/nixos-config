@@ -7,7 +7,7 @@
     ./system-packages.nix # System-wide packages
     ./mounts.nix # Filesystem mount configuration
     ./home.nix # Home-manager configuration
-    ./ollama.nix # Local AI model server (heavy build!)
+    # ./ollama.nix # Local AI model server (heavy build!)
   ];
 
   # Bootloader - systemd-boot is simpler than GRUB

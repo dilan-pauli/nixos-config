@@ -18,6 +18,7 @@
       bat                # Modern 'cat' with syntax highlighting
       fzf                # Fuzzy finder
       zoxide             # Smart 'cd' command
+      gh                 # GitHub CLI
     ]) ++
     
     # Fonts and Themes (Stable)
