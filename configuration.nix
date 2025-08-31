@@ -70,6 +70,9 @@
   };
 
   programs.zsh.enable = true; # Enable Zsh system-wide
+  
+  # SSH agent for automatic key management
+  programs.ssh.startAgent = true;
 
   # Home-Manager configuration - manages user environment
   home-manager = {
