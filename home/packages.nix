@@ -39,6 +39,7 @@
     
     # Development Tools (Unstable - Latest Features)
     (with pkgs-unstable; [
+      nodejs             # JavaScript runtime (latest version)
       claude-code        # AI coding assistant
       godot_4            # Game development engine
     ]) ++
@@ -60,6 +61,7 @@
       gamemode           # Game performance optimization
       gamescope          # Gaming compositor
       vulkan-tools       # Graphics debugging tools
+      prismlauncher      # Minecraft launcher (maintained alternative)
     ]) ++
     
     # Productivity Applications (Unstable)

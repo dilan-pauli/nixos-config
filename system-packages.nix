@@ -8,7 +8,17 @@
     openvpn     # OpenVPN client for Surfshark
     wireguard-tools # WireGuard VPN tools
     networkmanagerapplet # GUI for NetworkManager VPN
+    podman      # Container runtime
+    podman-tui  # Terminal UI for Podman
+    podman-compose # Docker Compose compatibility
   ];
+
+  # Podman configuration for rootless containers
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true; # Docker compatibility
+    defaultNetwork.settings.dns_enabled = true;
+  };
 
   # System-wide font configuration for better rendering
   fonts = {

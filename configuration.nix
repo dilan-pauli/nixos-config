@@ -7,7 +7,7 @@
     ./system-packages.nix # System-wide packages
     ./mounts.nix # Filesystem mount configuration
     ./home.nix # Home-manager configuration
-    # ./ollama.nix # Local AI model server (heavy build!)
+    ./ollama.nix # Local AI model server (heavy build!)
   ];
 
   # Bootloader - systemd-boot is simpler than GRUB
@@ -88,6 +88,7 @@
   # Nix configuration
   nix.settings.trusted-users = [ "root" "lrabbets" ]; # Users who can configure Nix
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable new Nix CLI
+  nix.settings.download-buffer-size = 134217728; # 128MB download buffer (default: 64MB)
   nixpkgs.config.allowUnfree = true; # Allow proprietary software
 
   # Automatic garbage collection - runs daily and keeps only last 3 days
