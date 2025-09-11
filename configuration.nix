@@ -121,14 +121,8 @@
   # Automatic store optimization to reduce disk usage
   nix.settings.auto-optimise-store = true;
 
-  # Automatic system updates - pulls latest flake inputs and rebuilds
-  system.autoUpgrade = {
-    enable = true;
-    dates = "04:30"; # Run daily at 4:30 AM
-    randomizedDelaySec = "30min"; # Add up to 30min random delay to avoid load spikes
-    allowReboot = false; # Don't automatically reboot (manual reboot required for kernel updates)
-    flake = "github:lawrab/nixos-config"; # Your flake repository
-  };
+  # Automatic system updates disabled - manual updates on Sundays
+  system.autoUpgrade.enable = false;
 
   # Hyprland window manager (Wayland-based)
   programs.hyprland.enable = true;

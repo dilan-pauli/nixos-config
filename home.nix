@@ -21,6 +21,7 @@
       
       # Applications and tools
       ./home/packages.nix      # System packages
+      ./home/python.nix        # Python development environment
       ./home/cli-tools.nix     # CLI tools with Catppuccin theming
       ./home/browsers.nix      # Web browsers (Firefox & Brave)
       ./home/vscode.nix        # Code editor
