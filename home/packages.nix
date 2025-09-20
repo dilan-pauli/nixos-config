@@ -34,7 +34,6 @@
     (with pkgs-unstable; [
       nodejs             # JavaScript runtime (latest version)
       claude-code        # AI coding assistant
-      godot_4            # Game development engine
       uv                 # Python tool runner (pipx alternative)
     ]) ++
     

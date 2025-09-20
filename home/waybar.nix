@@ -13,7 +13,7 @@
         reload_style_on_change = true;
         modules-left = [ "hyprland/workspaces" "mpris" "custom/music-viz" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "custom/services" "custom/weather" "custom/vpn" "pulseaudio" "network" "cpu" "memory" "custom/temps" "clock" "tray" ];
+        modules-right = [ "custom/services" "custom/vpn" "pulseaudio" "network" "cpu" "memory" "custom/temps" "clock" "tray" ];
 
         "hyprland/workspaces" = {
           "format" = "{id}";
@@ -92,14 +92,6 @@
           "on-click" = "kitty -e bash -c 'systemctl --no-pager status ollama; read'";
         };
 
-        "custom/weather" = {
-          "exec" = "waybar-weather";
-          "format" = "{}";
-          "interval" = 900;
-          "tooltip" = true;
-          "tooltip-format" = "Weather Information (Updates every 15min)";
-          "on-click" = "xdg-open https://wttr.in/";
-        };
 
         "custom/music-viz" = {
           "exec" = "waybar-music-viz";
@@ -184,7 +176,7 @@
 
       #cpu, #memory, #custom-temps, #pulseaudio, 
       #network, #clock, #mpris, #custom-services,
-      #custom-weather, #custom-music-viz, #custom-vpn {
+      #custom-music-viz, #custom-vpn {
         padding: 4px 10px;
         margin: 4px 3px;
         background: @surface0;
