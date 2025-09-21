@@ -30,11 +30,11 @@
     ]) ++
     
     
-    # Development Tools (Unstable - Latest Features)
+    # Essential Development Tools (Unstable - Latest Features)
     (with pkgs-unstable; [
-      nodejs             # JavaScript runtime (latest version)
       claude-code        # AI coding assistant
       uv                 # Python tool runner (pipx alternative)
+      # nodejs moved to project-specific flakes
     ]) ++
     
     # Media and Screenshot Tools (Unstable)

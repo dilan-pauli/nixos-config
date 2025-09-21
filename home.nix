@@ -21,7 +21,7 @@
       
       # Applications and tools
       ./home/packages.nix      # System packages
-      ./home/python.nix        # Python development environment
+      # ./home/python.nix      # Python development environment - moved to project flakes
       ./home/cli-tools.nix     # CLI tools with Catppuccin theming
       ./home/browsers.nix      # Web browsers (Firefox & Brave)
       ./home/vscode.nix        # Code editor
@@ -33,6 +33,7 @@
       ./home/shell.nix         # Zsh configuration
       ./home/git.nix           # Git settings
       ./home/scripts.nix       # Custom scripts
+      ./home/direnv.nix        # Development environment management
       
       # System integration
       ./home/environment.nix   # Environment variables and secrets

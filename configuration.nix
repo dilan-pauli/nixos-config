@@ -7,7 +7,7 @@
     ./system-packages.nix # System-wide packages
     ./mounts.nix # Filesystem mount configuration
     ./home.nix # Home-manager configuration
-    ./ollama.nix # Local AI model server (heavy build!)
+    # ./ollama.nix # Local AI model server (heavy build!) - disabled for faster builds
   ];
 
   # Bootloader - systemd-boot is simpler than GRUB
@@ -66,7 +66,7 @@
   users.users.lrabbets = {
     isNormalUser = true;
     description = "Lawrence Rabbets";
-    extraGroups = [ "networkmanager" "wheel" "ollama" ]; # wheel = sudo access
+    extraGroups = [ "networkmanager" "wheel" ]; # wheel = sudo access
   };
 
   programs.zsh.enable = true; # Enable Zsh system-wide
@@ -89,6 +89,11 @@
   nix.settings.trusted-users = [ "root" "lrabbets" ]; # Users who can configure Nix
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable new Nix CLI
   nix.settings.download-buffer-size = 134217728; # 128MB download buffer (default: 64MB)
+  
+  # Development environment optimization
+  nix.settings.keep-outputs = true; # Keep build outputs for development shells
+  nix.settings.keep-derivations = true; # Keep derivations for development shells
+  
   nixpkgs.config.allowUnfree = true; # Allow proprietary software
 
   # Automatic garbage collection - runs daily and keeps only last 3 days
