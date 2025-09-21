@@ -5,4 +5,21 @@
     pkgs-unstable._1password-cli
     pkgs-unstable._1password-gui
   ];
+
+  # SSH configuration for 1Password integration
+  programs.ssh = {
+    enable = true;
+    
+    # Global SSH configuration
+    extraConfig = ''
+      # Use 1Password SSH agent
+      IdentityAgent ~/.1password/agent.sock
+      
+      # Load keys from 1Password on demand
+      AddKeysToAgent yes
+      
+      # Use SSH key comments for better organization in 1Password
+      IdentitiesOnly yes
+    '';
+  };
 }

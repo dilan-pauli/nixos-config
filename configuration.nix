@@ -71,8 +71,8 @@
 
   programs.zsh.enable = true; # Enable Zsh system-wide
   
-  # SSH agent for automatic key management
-  programs.ssh.startAgent = true;
+  # SSH agent disabled - using 1Password SSH agent instead
+  programs.ssh.startAgent = false;
 
   # Home-Manager configuration - manages user environment
   home-manager = {
