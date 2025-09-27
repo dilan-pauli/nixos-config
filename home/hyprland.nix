@@ -57,7 +57,7 @@ in # This is the end of the 'let' block and the start of your main config
         # -- App Launchers --
         "$mainMod, RETURN, exec, kitty"
         "$mainMod, D, exec, wofi --show drun"
-        "$mainMod, E, exec, thunar"
+        "$mainMod, E, exec, kitty -e yazi"
         "$mainMod, O, exec, obsidian"
         "$mainMod, B, exec, brave-dark"
         "$mainMod SHIFT, B, exec, firefox"

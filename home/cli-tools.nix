@@ -1,11 +1,7 @@
-# home/cli-tools.nix - Catppuccin theming for CLI tools
+# home/cli-tools.nix - CLI tools with default theming
 { ... }:
 
 {
-  # Enable Catppuccin theming for supported CLI tools
-  catppuccin = {
-    bat.enable = true;         # Modern 'cat' with syntax highlighting
-    btop.enable = true;        # System monitor
-    fzf.enable = true;         # Fuzzy finder
-  };
+  # CLI tools use their default themes - eza, bat, btop, fzf all have excellent defaults
+  # Catppuccin theming handled globally in home.nix if needed
 }

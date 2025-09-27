@@ -27,6 +27,7 @@
       ./home/vscode.nix        # Code editor
       ./home/neovim.nix        # Terminal editor
       ./home/kitty.nix         # Terminal emulator
+      ./home/yazi.nix          # Terminal file manager
       ./home/1password.nix     # Password manager
       
       # Shell and development environment

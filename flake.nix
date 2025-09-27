@@ -23,7 +23,7 @@
     };
 
     # Catppuccin theming for comprehensive application support
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin.url = "github:catppuccin/nix/d75e3fe67f49728cb5035bc791f4b9065ff3a2c9";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin, ... }@inputs: 

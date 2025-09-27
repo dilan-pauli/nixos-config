@@ -6,7 +6,7 @@
     (with pkgs; [
       libnotify          # Desktop notifications
       pwvucontrol        # PipeWire volume control
-      xfce.thunar        # File manager
+      yazi               # Modern terminal file manager
       btop               # System monitor
       lm_sensors         # Hardware sensors
       nvtopPackages.nvidia # GPU monitoring for btop
