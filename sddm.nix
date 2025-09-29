@@ -1,28 +1,6 @@
 # sddm.nix - SDDM Display Manager Configuration with Catppuccin Theme
 { config, pkgs, lib, ... }:
 
-let
-  # Catppuccin SDDM theme package
-  catppuccin-sddm = pkgs.stdenv.mkDerivation rec {
-    pname = "catppuccin-sddm";
-    version = "1.0.0";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "catppuccin";
-      repo = "sddm";
-      rev = "f3db13cbe8e99c6581acf0f5c2cb4e12d287f5ea";
-      hash = "sha256-0zoJOTFjQq3gm5i3xCRbyk781kB7BqcWWNrrIkWf2Xk=";
-    };
-
-    installPhase = ''
-      mkdir -p $out/share/sddm/themes
-      cp -r src/catppuccin-mocha $out/share/sddm/themes/
-
-      # Copy our wallpaper
-      cp ${./wallpapers/f1-3.png} $out/share/sddm/themes/catppuccin-mocha/backgrounds/wall.jpg
-    '';
-  };
-in
 {
   # SDDM Display Manager Configuration
   services.displayManager.sddm = {
@@ -86,9 +64,14 @@ in
     };
   };
 
-  # Ensure SDDM theme is installed
+  # Ensure SDDM theme and dependencies are installed
   environment.systemPackages = with pkgs; [
-    catppuccin-sddm
+    (catppuccin-sddm.override {
+      flavor = "mocha";
+      fontSize = "9";
+      background = "${./wallpapers/f1-3.png}";
+      loginBackground = true;
+    })
     libsForQt5.qt5.qtquickcontrols2
     libsForQt5.qt5.qtgraphicaleffects
     kdePackages.qtquick3d
