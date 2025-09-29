@@ -5,7 +5,6 @@
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
-    catppuccin.enable = true;  # Enable Catppuccin theme
     
     settings = {
       
@@ -45,6 +44,8 @@
       ];
     };
 
-    # The Catppuccin theme is automatically applied via catppuccin.enable = true
   };
+
+  # Enable Catppuccin theme for Yazi (new location)
+  catppuccin.yazi.enable = true;
 }

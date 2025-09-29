@@ -7,6 +7,7 @@
     ./system-packages.nix # System-wide packages
     ./mounts.nix # Filesystem mount configuration
     ./home.nix # Home-manager configuration
+    ./sddm.nix # SDDM display manager with Catppuccin theme
     # ./ollama.nix # Local AI model server (heavy build!) - disabled for faster builds
   ];
 
@@ -132,10 +133,6 @@
   # Hyprland window manager (Wayland-based)
   programs.hyprland.enable = true;
   programs.hyprland.xwayland.enable = true; # X11 app compatibility
-  services.greetd = {
-    enable = true;
-    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-  };
 
   # Enable PAM authentication for screen locking
   security.pam.services.hyprlock = {};
