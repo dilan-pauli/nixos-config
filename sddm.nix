@@ -1,5 +1,5 @@
 # sddm.nix - SDDM Display Manager Configuration with Catppuccin Theme
-{ config, pkgs, lib, theme, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   # Catppuccin SDDM theme package
@@ -17,11 +17,6 @@ let
     installPhase = ''
       mkdir -p $out/share/sddm/themes
       cp -r src/catppuccin-mocha $out/share/sddm/themes/
-
-      # Configure theme with our color scheme
-      substituteInPlace $out/share/sddm/themes/catppuccin-mocha/theme.conf \
-        --replace "AccentColor=\"#cba6f7\"" "AccentColor=\"${theme.colors.primary}\"" \
-        --replace "BackgroundColor=\"#1e1e2e\"" "BackgroundColor=\"${theme.colors.base}\""
 
       # Copy our wallpaper
       cp ${./wallpapers/f1-3.png} $out/share/sddm/themes/catppuccin-mocha/backgrounds/wall.jpg
@@ -119,13 +114,13 @@ in
       # Use integrated GPU for SDDM to save power
       env = WLR_DRM_DEVICES,/dev/dri/card0
 
-      # Basic appearance
+      # Basic appearance with Catppuccin Mocha colors
       general {
         border_size = 2
         gaps_in = 5
         gaps_out = 10
-        col.active_border = rgba(${theme.colors.primary}ff)
-        col.inactive_border = rgba(${theme.colors.surface}ff)
+        col.active_border = rgba(cba6f7ff)    # Catppuccin Mocha mauve
+        col.inactive_border = rgba(313244ff)  # Catppuccin Mocha surface0
       }
 
       decoration {
