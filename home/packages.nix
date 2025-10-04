@@ -34,7 +34,7 @@
     (with pkgs-unstable; [
       claude-code        # AI coding assistant
       uv                 # Python tool runner (pipx alternative)
-      # nodejs moved to project-specific flakes
+      nodejs             # JavaScript runtime
     ]) ++
     
     # Media and Screenshot Tools (Unstable)
@@ -75,6 +75,7 @@
     ]) ++
     (with pkgs-unstable; [
       reaper             # Professional DAW
+      lmms               # Linux MultiMedia Studio - DAW for music production
       ffmpeg-full        # Comprehensive media conversion
       vlc                # Media player with codec support
     ]);
