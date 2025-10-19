@@ -6,10 +6,16 @@
     (with pkgs; [
       libnotify          # Desktop notifications
       pwvucontrol        # PipeWire volume control
-      yazi               # Modern terminal file manager
       btop               # System monitor
       lm_sensors         # Hardware sensors
       nvtopPackages.nvidia # GPU monitoring for btop
+    ]) ++
+
+    # File Manager (Stable)
+    (with pkgs; [
+      xfce.thunar              # GUI file manager with drag-and-drop
+      xfce.thunar-volman       # Automatic device management
+      xfce.thunar-archive-plugin  # Archive file support
     ]) ++
     
     # CLI Tools (Stable) - themed with Catppuccin
@@ -33,6 +39,7 @@
     # Essential Development Tools (Unstable - Latest Features)
     (with pkgs-unstable; [
       claude-code        # AI coding assistant
+      python3            # Python interpreter
       uv                 # Python tool runner (pipx alternative)
       nodejs             # JavaScript runtime
     ]) ++
@@ -75,7 +82,6 @@
     ]) ++
     (with pkgs-unstable; [
       reaper             # Professional DAW
-      lmms               # Linux MultiMedia Studio - DAW for music production
       ffmpeg-full        # Comprehensive media conversion
       vlc                # Media player with codec support
     ]);

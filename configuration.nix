@@ -8,7 +8,8 @@
     ./mounts.nix # Filesystem mount configuration
     ./home.nix # Home-manager configuration
     ./sddm.nix # SDDM display manager with Catppuccin theme
-    # ./ollama.nix # Local AI model server (heavy build!) - disabled for faster builds
+    ./minecraft-server.nix # Minecraft server infrastructure support
+    # ./ollama.nix # Local AI model server (heavy build!)
   ];
 
   # Bootloader - systemd-boot is simpler than GRUB
@@ -136,6 +137,10 @@
 
   # Enable PAM authentication for screen locking
   security.pam.services.hyprlock = {};
+
+  # Enable gnome-keyring for 1Password secret storage
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
 
   # Enable automatic trim
   services.fstrim.enable = true;
