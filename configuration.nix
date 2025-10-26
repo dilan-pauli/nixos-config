@@ -8,7 +8,6 @@
     ./mounts.nix # Filesystem mount configuration
     ./home.nix # Home-manager configuration
     ./sddm.nix # SDDM display manager with Catppuccin theme
-    ./minecraft-server.nix # Minecraft server infrastructure support
     # ./ollama.nix # Local AI model server (heavy build!)
   ];
 
@@ -26,7 +25,14 @@
   
   # Disable IPv6 to prevent VPN leaks
   networking.enableIPv6 = false;
-  
+
+  # Firewall configuration for Minecraft server
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 25565 ]; # Minecraft server
+    allowedUDPPorts = [ 25565 ]; # Minecraft server
+  };
+
   # DNS resolution service for caching and security
   services.resolved.enable = true;
   
@@ -134,6 +140,16 @@
   # Hyprland window manager (Wayland-based)
   programs.hyprland.enable = true;
   programs.hyprland.xwayland.enable = true; # X11 app compatibility
+
+  # XDG Desktop Portal for proper Wayland app integration
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = "*";
+  };
 
   # Enable PAM authentication for screen locking
   security.pam.services.hyprlock = {};
