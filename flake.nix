@@ -35,6 +35,12 @@
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true; # Allow proprietary software like Steam, Discord, etc.
+        overlays = [
+          # TEMPORARY: Remove this overlay when nixpkgs reaches 1Password 8.11.14+
+          # Added 2025-10-26 to fix critical bug in earlier version
+          # To remove: delete this overlay import and overlays/1password.nix
+          (import ./overlays/1password.nix)
+        ];
       };
     in
   {
