@@ -138,15 +138,15 @@
   system.autoUpgrade.enable = false;
 
   # Hyprland window manager (Wayland-based)
+  # Note: Package version is managed in home/hyprland.nix via home-manager
   programs.hyprland.enable = true;
   programs.hyprland.xwayland.enable = true; # X11 app compatibility
 
   # XDG Desktop Portal for proper Wayland app integration
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-hyprland
-      xdg-desktop-portal-gtk
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
     ];
     config.common.default = "*";
   };

@@ -11,6 +11,8 @@
     podman      # Container runtime
     podman-tui  # Terminal UI for Podman
     podman-compose # Docker Compose compatibility
+    ghostscript # Required for CUPS print preview generation
+    poppler_utils # PDF conversion tools for print preview
   ];
 
   # Podman configuration for rootless containers

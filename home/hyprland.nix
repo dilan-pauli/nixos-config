@@ -1,4 +1,4 @@
-{ pkgs, config, ...}:
+{ pkgs, pkgs-unstable, config, ...}:
 
 let
   # Self-referencing: access our own config to generate a help script
@@ -28,8 +28,11 @@ let
 in # This is the end of the 'let' block and the start of your main config
 
 {
+    # Hyprland window manager configuration
+    # This is the single source of truth for Hyprland version and settings
     wayland.windowManager.hyprland = {
     enable = true;
+    package = pkgs-unstable.hyprland; # Use unstable (0.52+) for crash fixes
     settings = {
       monitor = ",preferred,auto,1";
 

@@ -62,6 +62,8 @@
       gamescope          # Gaming compositor
       vulkan-tools       # Graphics debugging tools
       prismlauncher      # Minecraft launcher (maintained alternative)
+      wowup-cf           # World of Warcraft addon manager (CurseForge)
+      r2modman           # Thunderstore mod manager (Risk of Rain 2, Lethal Company, etc.)
     ]) ++
     
     # Productivity Applications (Unstable)
