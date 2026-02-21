@@ -7,8 +7,7 @@
     ./system-packages.nix # System-wide packages
     ./mounts.nix # Filesystem mount configuration
     ./home.nix # Home-manager configuration
-    ./sddm.nix # SDDM display manager with Catppuccin theme
-    # ./ollama.nix # Local AI model server (heavy build!)
+    ./display_manager.nix # SDDM display manager with Catppuccin theme
   ];
 
   # Bootloader - systemd-boot is simpler than GRUB
@@ -26,11 +25,9 @@
   # Disable IPv6 to prevent VPN leaks
   networking.enableIPv6 = false;
 
-  # Firewall configuration for Minecraft server
+  # Firewall configuration
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 25565 ]; # Minecraft server
-    allowedUDPPorts = [ 25565 ]; # Minecraft server
   };
 
   # DNS resolution service for caching and security
@@ -39,26 +36,9 @@
   # Enable UPower for power management information
   services.upower.enable = true;
 
-  # Printing services - CUPS with Brother printer support
-  services.printing = {
-    enable = true;
-    drivers = with pkgs; [
-      brlaser              # Brother laser printer driver (open source)
-      brgenml1lpr          # Brother generic LPR driver
-      brgenml1cupswrapper  # Brother generic CUPS wrapper
-    ];
-  };
-  
-  # Enable network printer discovery
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
   # Timezone and Locale
-  time.timeZone = "Europe/London";
-  i18n.defaultLocale = "en_GB.UTF-8";
+  time.timeZone = "America/Regina";
+  i18n.defaultLocale = "en_CA.UTF-8";
 
   # Sound via Pipewire (modern replacement for PulseAudio)
   services.pulseaudio.enable = false; # Disable old audio system
@@ -71,9 +51,9 @@
   };
 
   # User account configuration
-  users.users.lrabbets = {
+  users.users.noquarter = {
     isNormalUser = true;
-    description = "Lawrence Rabbets";
+    description = "Dilan Pauli";
     extraGroups = [ "networkmanager" "wheel" ]; # wheel = sudo access
   };
 
@@ -88,13 +68,13 @@
     useUserPackages = true; # Install to user profile
     backupFileExtension = "backup"; # Backup existing files instead of failing
     extraSpecialArgs = { inherit pkgs-unstable theme; }; # Pass variables to home config
-    users.lrabbets = { ... }: {
+    users.noquarter = { ... }: {
       # User configuration defined in home.nix
     };
   };
 
   # Nix configuration
-  nix.settings.trusted-users = [ "root" "lrabbets" ]; # Users who can configure Nix
+  nix.settings.trusted-users = [ "root" "noquarter" ]; # Users who can configure Nix
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable new Nix CLI
   nix.settings.download-buffer-size = 134217728; # 128MB download buffer (default: 64MB)
   
@@ -117,7 +97,7 @@
     script = "${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 3d";
     serviceConfig = {
       Type = "oneshot";
-      User = "lrabbets";
+      User = "noquarter";
     };
   };
   
@@ -137,6 +117,7 @@
   # Automatic system updates disabled - manual updates on Sundays
   system.autoUpgrade.enable = false;
 
+  # TODO Replace with Niri
   # Hyprland window manager (Wayland-based)
   # Note: Package version is managed in home/hyprland.nix via home-manager
   programs.hyprland.enable = true;
@@ -164,25 +145,22 @@
   # Graphics configuration for gaming and GPU acceleration
   hardware.graphics = {
     enable = true;
-    enable32Bit = true; # Required for Wine/Steam Proton games
-  };
-
-  # Enable NVIDIA driver loading
-  services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.screenSection = ''
-    Option "Coolbits" "28"
-  '';
-
-  # NVIDIA driver configuration
-  hardware.nvidia = {
-    modesetting.enable = true; # Required for Wayland
-    open = false; # Use proprietary driver (better gaming performance)
-    nvidiaSettings = true; # Include nvidia-settings GUI
-    package = config.boot.kernelPackages.nvidiaPackages.stable; # Stable driver version
-    
-    # Enable power management and persistence for GPU control
-    powerManagement.enable = true;
-    powerManagement.finegrained = false;
+    enable32Bit = lib.mkForce true;
+    extraPackages = with pkgs; [
+      intel-compute-runtime
+      intel-media-driver    # LIBVA_DRIVER_NAME=iHD
+      libva-vdpau-driver
+      libvdpau-va-gl
+      mesa
+      nvidia-vaapi-driver
+      nv-codec-headers-12
+    ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [
+      intel-media-driver
+      libva-vdpau-driver
+      mesa
+      libvdpau-va-gl
+    ];
   };
 
   # Enable swap for better memory pressure handling
@@ -191,13 +169,6 @@
     size = 8*1024; # 8GB swap file
   } ];
 
-  # Fix NVIDIA device node creation
-  services.udev.extraRules = ''
-    KERNEL=="nvidia_uvm", OWNER="root", GROUP="video", MODE="0660"
-    KERNEL=="nvidia*", OWNER="root", GROUP="video", MODE="0660"
-    KERNEL=="nvidiactl", OWNER="root", GROUP="video", MODE="0660"
-  '';
-
   # Ensure NFS state directories exist
   systemd.tmpfiles.rules = [
     "d /var/lib/nfs 0755 root root"
@@ -205,18 +176,5 @@
     "d /var/lib/nfs/sm.bak 0755 root root"
   ];
 
-  # GPU clock speed configuration via systemd service
-  systemd.services.gpu-undervolt = {
-    description = "GPU Undervolting Service";
-    after = [ "graphical-session.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "/run/current-system/sw/bin/nvidia-smi -lgc 1830";
-      User = "root";
-    };
-  };
-
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }

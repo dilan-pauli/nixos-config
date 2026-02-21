@@ -413,7 +413,7 @@ EOF
     #!/usr/bin/env bash
     set -euo pipefail
 
-    WALLPAPER_DIR="/home/lrabbets/nixos-config/wallpapers"
+    WALLPAPER_DIR="/home/noquarter/nixos-config/wallpapers"
     
     # Check if wallpaper directory exists
     if [ ! -d "$WALLPAPER_DIR" ]; then
@@ -498,7 +498,7 @@ EOF
     #!/usr/bin/env bash
     set -euo pipefail
 
-    TEMPLATE_DIR="/home/lrabbets/nixos-config/dev-templates"
+    TEMPLATE_DIR="/home/noquarter/nixos-config/dev-templates"
     
     # Show usage if no arguments
     if [ $# -eq 0 ]; then

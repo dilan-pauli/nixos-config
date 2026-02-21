@@ -1,24 +1,18 @@
 {
-  description = "Larry's NixOS Configuration";
+  description = "Dilan's NixOS Configuration";
   
-  # Binary cache configuration for CUDA packages
   nixConfig = {
-    extra-substituters = [
-      "https://cuda-maintainers.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-    ];
   };
 
   inputs = {
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # Stable release branch for reliable system packages
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05"; 
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11"; 
     # Unstable branch for latest packages (Firefox, development tools, etc.)
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs"; # Use same nixpkgs version for consistency
     };
 
@@ -39,13 +33,14 @@
     in
   {
     nixosConfigurations = {
-      "larry-desktop" = nixpkgs.lib.nixosSystem {
+      "noquarter-laptop" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs pkgs-unstable theme catppuccin; }; # Pass variables to all modules
         modules = [
           ./configuration.nix # System-level configuration
           home-manager.nixosModules.home-manager # User environment management
           catppuccin.nixosModules.catppuccin # Catppuccin theming support
+          inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t490
         ];
       };
     };

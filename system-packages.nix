@@ -5,14 +5,12 @@
   environment.systemPackages = with pkgs; [
     nfs-utils   # For NFS filesystem support
     cifs-utils  # For SMB/CIFS filesystem support
-    openvpn     # OpenVPN client for Surfshark
+    openvpn     # OpenVPN client
     wireguard-tools # WireGuard VPN tools
     networkmanagerapplet # GUI for NetworkManager VPN
     podman      # Container runtime
     podman-tui  # Terminal UI for Podman
     podman-compose # Docker Compose compatibility
-    ghostscript # Required for CUPS print preview generation
-    poppler_utils # PDF conversion tools for print preview
   ];
 
   # Podman configuration for rootless containers

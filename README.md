@@ -31,6 +31,7 @@ This repository is the living blueprint of my desktop, crafted with [NixOS](http
 ---
 
 ## Table of Contents
+
 - [What's Inside? A Look at the Tech Stack](#-whats-inside-a-look-at-the-tech-stack)
 - [Blueprint: How It's All Organised](#️-blueprint-how-its-all-organised)
 - [Phase 2: Project-Based Development Workflow](#-phase-2-project-based-development-workflow)
@@ -114,12 +115,14 @@ This configuration implements a **Phase 2** approach to NixOS development enviro
 ### Why Phase 2?
 
 **Traditional Approach (Phase 1):**
+
 - ❌ Heavy system-wide package installation (67+ Python packages)
 - ❌ Slow system rebuilds due to compilation
 - ❌ Version conflicts between projects
 - ❌ Difficult to share exact development environments
 
 **Phase 2 Approach:**
+
 - ✅ **~80% faster system rebuilds** - only essential tools installed globally
 - ✅ **Project isolation** - each project has its own environment
 - ✅ **Reproducible environments** - exact dependencies defined per project
@@ -129,7 +132,9 @@ This configuration implements a **Phase 2** approach to NixOS development enviro
 ### How It Works
 
 #### 1. Lightweight System Configuration
+
 The system now only includes essential development tools globally:
+
 ```nix
 # Only essential tools installed system-wide
 claude-code        # AI coding assistant
@@ -140,6 +145,7 @@ python3            # Base Python interpreter
 All heavy development packages (numpy, pandas, nodejs, etc.) have been moved to project-specific flakes.
 
 #### 2. Development Templates
+
 Pre-configured development environments for common use cases:
 
 | Template | Use Case | Included Packages |
@@ -151,6 +157,7 @@ Pre-configured development environments for common use cases:
 #### 3. The `dev-init` Workflow
 
 **Quick Start:**
+
 ```bash
 # Create a new project
 mkdir my-ml-project && cd my-ml-project
@@ -164,6 +171,7 @@ python -c "import numpy; print('NumPy ready!')"
 ```
 
 **What happens behind the scenes:**
+
 1. `dev-init` copies the appropriate `flake.nix` template
 2. Creates `.envrc` file for direnv integration
 3. Automatically allows direnv to load the environment
@@ -172,12 +180,14 @@ python -c "import numpy; print('NumPy ready!')"
 #### 4. Automatic Environment Management
 
 **Direnv Integration:**
+
 - **Automatic loading**: Environment activates when entering project directory
 - **Automatic unloading**: Environment deactivates when leaving project
 - **VSCode integration**: Automatic environment detection in editor
 - **Shell integration**: Works seamlessly with bash/zsh
 
 **Example Workflow:**
+
 ```bash
 # Navigate to project - environment loads automatically
 cd ~/projects/my-ml-project
@@ -197,6 +207,7 @@ cd ~/
 #### 5. VSCode Integration
 
 The configuration includes automatic VSCode integration:
+
 - **Direnv extension**: Automatic environment detection
 - **Enhanced Nix support**: Syntax highlighting and language server
 - **Python integration**: Automatic virtual environment detection
@@ -207,11 +218,13 @@ The configuration includes automatic VSCode integration:
 **Add your own development environment:**
 
 1. **Create template directory:**
+
    ```bash
    mkdir ~/nixos-config/dev-templates/my-template
    ```
 
 2. **Create flake.nix:**
+
    ```nix
    {
      description = "My Custom Development Environment";
@@ -240,6 +253,7 @@ The configuration includes automatic VSCode integration:
    ```
 
 3. **Use your template:**
+
    ```bash
    dev-init my-template
    ```
@@ -247,6 +261,7 @@ The configuration includes automatic VSCode integration:
 ### Advanced Usage
 
 **Manual Environment Management:**
+
 ```bash
 # Enter environment manually
 nix develop
@@ -260,6 +275,7 @@ exit
 ```
 
 **Environment Customization:**
+
 ```bash
 # Edit project-specific packages
 nano flake.nix
@@ -269,6 +285,7 @@ direnv reload
 ```
 
 **Sharing Environments:**
+
 ```bash
 # Share flake.nix with teammates
 git add flake.nix .envrc
@@ -284,22 +301,26 @@ git clone project && cd project
 **For existing projects:**
 
 1. **Backup current setup:**
+
    ```bash
    pip freeze > requirements.txt  # Save current packages
    ```
 
 2. **Initialize development environment:**
+
    ```bash
    dev-init python-ml  # or appropriate template
    ```
 
 3. **Customize as needed:**
+
    ```bash
    nano flake.nix  # Add any missing packages
    direnv reload   # Apply changes
    ```
 
 4. **Verify environment:**
+
    ```bash
    python -c "import your_packages"  # Test imports
    ```
@@ -313,11 +334,13 @@ This Phase 2 approach transforms your system from a "development workstation" to
 All configuration files include comprehensive inline documentation to help you understand NixOS-specific patterns and quirks. Key files are documented with:
 
 ### Core System Files
+
 - **[`flake.nix`](./flake.nix)** - Main flake configuration with binary caches, channel mixing, and module organisation
 - **[`configuration.nix`](./configuration.nix)** - System-wide settings including bootloader, networking, audio, graphics, and user management
 - **[`home.nix`](./home.nix)** - Home Manager integration and user module imports
 
 ### Key User Configuration Files
+
 - **[`home/browsers.nix`](./home/browsers.nix)** - Consolidated Firefox and Brave configuration with matching settings
 - **[`home/packages.nix`](./home/packages.nix)** - User packages organized by category (utilities, development, gaming, etc.)
 - **[`home/environment.nix`](./home/environment.nix)** - Environment variables for Wayland compatibility and dark mode
@@ -325,7 +348,9 @@ All configuration files include comprehensive inline documentation to help you u
 - **[`home/gtk.nix`](./home/gtk.nix)** - GTK theming with consolidated CSS for consistent dark mode
 
 ### Application Configurations
+
 Each configuration file in the `home/` directory includes documentation for:
+
 - **NixOS-specific patterns** - `writeShellScriptBin`, service integration, and package organization
 - **Wayland-first approach** - Native Wayland tools (Mako, grim/slurp) instead of X11 alternatives
 - **Modular design** - Clean separation of concerns with consolidated configurations
@@ -334,7 +359,9 @@ Each configuration file in the `home/` directory includes documentation for:
 - **Environment variables** - Proper Wayland compatibility and dark mode enforcement
 
 ### Recent Optimizations (2025)
+
 The configuration has been recently optimized for:
+
 - **Consolidated theming** - GTK CSS shared between GTK3/GTK4, unified dark mode variables
 - **Organized packages** - Categorized by function with clear stable/unstable separation  
 - **Streamlined shell setup** - Unified zsh initialization without conflicts
@@ -350,12 +377,14 @@ The documentation focuses on **why** things are configured a certain way rather 
 This configuration now uses the **official [Catppuccin/nix](https://github.com/catppuccin/nix) modules** for consistent theming across all supported applications. The setup provides:
 
 ### Official Catppuccin Integration
+
 - **Centralized theming** via `catppuccin/nix` flake input
 - **System-wide Catppuccin Mocha** color scheme applied consistently
 - **Native module support** for applications like Firefox, Neovim, Kitty, Waybar, and more
 - **Automatic color coordination** - all applications use the same official Catppuccin palette
 
 ### Supported Applications with Native Catppuccin Theming
+
 - **Terminal**: Kitty terminal with Catppuccin Mocha
 - **Editors**: Neovim with official Catppuccin plugin
 - **Browsers**: Firefox with Catppuccin theme
@@ -365,9 +394,11 @@ This configuration now uses the **official [Catppuccin/nix](https://github.com/c
 - **Development**: VS Code with Catppuccin color profile
 
 ### Fallback Theme System
+
 The [`theme/theme.nix`](theme/theme.nix) file now serves as a **fallback** for applications that don't yet have official Catppuccin/nix module support (like wofi, thunar, etc.). It contains the official Catppuccin Mocha color definitions for manual theming of unsupported applications.
 
 ### Global Theme Configuration
+
 The theming is controlled through a single `catppuccin` configuration in [`home.nix`](home.nix):
 
 ```nix
@@ -389,6 +420,7 @@ This configuration implements a **three-tier package management approach** that 
 ### Package Management Tiers
 
 #### Tier 1: Essential System Packages (Stable Channel)
+
 **Location:** `home/packages.nix`  
 **Purpose:** Core desktop functionality and utilities
 
@@ -400,6 +432,7 @@ This configuration implements a **three-tier package management approach** that 
 ```
 
 #### Tier 2: Applications & Tools (Unstable Channel)
+
 **Location:** `home/packages.nix`  
 **Purpose:** Desktop applications that benefit from latest features
 
@@ -411,6 +444,7 @@ This configuration implements a **three-tier package management approach** that 
 ```
 
 #### Tier 3: Development Environments (Project-Specific Flakes)
+
 **Location:** `dev-templates/` and individual projects  
 **Purpose:** Isolated, reproducible development environments
 
@@ -424,7 +458,8 @@ This configuration implements a **three-tier package management approach** that 
 ### The Flake.nix Channel Strategy
 
 The configuration defines two package sources:
-- **`pkgs`** - Stable packages from NixOS 25.05 (system reliability)
+
+- **`pkgs`** - Stable packages from NixOS 25.11 (system reliability)
 - **`pkgs-unstable`** - Latest packages from nixos-unstable (features & security)
 
 ### When to Use Each Approach
@@ -438,7 +473,8 @@ The configuration defines two package sources:
 
 ### Adding Packages
 
-#### For System-Wide Packages:
+#### For System-Wide Packages
+
 ```nix
 # In home/packages.nix - add to appropriate section
 (with pkgs; [
@@ -449,7 +485,8 @@ The configuration defines two package sources:
 ])
 ```
 
-#### For Development Packages:
+#### For Development Packages
+
 ```bash
 # Use project-specific flakes instead
 dev-init python-ml     # Get numpy, pandas, etc.
@@ -461,12 +498,14 @@ dev-init nodejs        # Get node, typescript, etc.
 ### Migration from Global Development Packages
 
 **What Changed:**
+
 - ❌ **Removed:** 67+ Python packages from global installation
 - ❌ **Removed:** Node.js and npm from system packages  
 - ✅ **Added:** Project-specific development environments
 - ✅ **Added:** Automatic environment switching via direnv
 
 **Benefits:**
+
 - **~80% faster system rebuilds** - no more compiling scientific Python packages
 - **Zero version conflicts** - each project has isolated dependencies
 - **Perfect reproducibility** - exact same environment on every machine
@@ -475,6 +514,7 @@ dev-init nodejs        # Get node, typescript, etc.
 ### Package Discovery
 
 **Finding packages:**
+
 ```bash
 # Search nixpkgs
 nix search nixpkgs python3Packages.numpy
@@ -506,7 +546,7 @@ The system is configured to automatically source a `~/.env` file from your home 
 sudo nixos-rebuild switch --flake ~/nixos-config#larry-desktop
 ```
 
-2. **Create your environment file using the provided script:**
+1. **Create your environment file using the provided script:**
 
 ```bash
 create-env
@@ -514,7 +554,7 @@ create-env
 
 This interactive script will prompt you for each environment variable and only add the ones you provide values for.
 
-3. **Or create the file manually:**
+1. **Or create the file manually:**
 
 ```bash
 nano ~/.env
@@ -529,13 +569,13 @@ export LAMETRIC_API_KEY="your-actual-lametric-key-here"
 export LAMETRIC_IP="your-lametric-device-ip-here"
 ```
 
-4. **Set secure permissions:**
+1. **Set secure permissions:**
 
 ```bash
 chmod 600 ~/.env
 ```
 
-5. **Load in current session:**
+1. **Load in current session:**
 
 ```bash
 source ~/.env
@@ -544,6 +584,7 @@ source ~/.env
 ### Supported Environment Variables
 
 Currently, the configuration supports:
+
 - `ANTHROPIC_API_KEY` - For Claude AI integration
 - `LAMETRIC_API_KEY` - For LaMetric device integration
 - `LAMETRIC_IP` - LaMetric device IP address
@@ -561,11 +602,13 @@ Currently, the configuration supports:
 If you don't have a LaMetric Time device, you can disable the LaMetric music controls in Waybar:
 
 1. **Edit the Waybar configuration:**
+
    ```bash
    nano ~/nixos-config/home/waybar.nix
    ```
 
 2. **Remove LaMetric from modules-left:**
+
    ```nix
    # Change this line:
    modules-left = [ "hyprland/workspaces" "mpris" "custom/lametric-music" ];
@@ -578,6 +621,7 @@ If you don't have a LaMetric Time device, you can disable the LaMetric music con
    You can also remove the entire `"custom/lametric-music"` section and its styling to clean up the configuration.
 
 4. **Rebuild your system:**
+
    ```bash
    sudo nixos-rebuild switch
    ```
@@ -650,6 +694,7 @@ This configuration includes GPU undervolting settings specifically configured fo
 ### Current GPU Configuration
 
 The configuration includes:
+
 - **Coolbits "28"** - Enables GPU overclocking/undervolting controls
 - **Power Management** - Basic NVIDIA power management features  
 - **Automatic Clock Limiting** - Systemd service that sets GPU clock to 1905 MHz on startup
@@ -667,11 +712,13 @@ If you want to use this configuration but don't want the GPU undervolting, follo
 To keep NVIDIA drivers but remove automatic undervolting:
 
 1. **Edit configuration.nix:**
+
    ```bash
    nano ~/nixos-config/configuration.nix
    ```
 
 2. **Comment out or remove the entire systemd service section:**
+
    ```nix
    # GPU clock speed configuration via systemd service
    # systemd.services.gpu-undervolt = {
@@ -688,6 +735,7 @@ To keep NVIDIA drivers but remove automatic undervolting:
    ```
 
 3. **Rebuild your system:**
+
    ```bash
    sudo nixos-rebuild switch
    ```
@@ -697,6 +745,7 @@ To keep NVIDIA drivers but remove automatic undervolting:
 To also remove the ability to modify GPU clocks manually:
 
 1. **Edit configuration.nix and remove the screenSection:**
+
    ```nix
    # Remove or comment out these lines:
    # services.xserver.screenSection = ''
@@ -705,6 +754,7 @@ To also remove the ability to modify GPU clocks manually:
    ```
 
 2. **Rebuild your system:**
+
    ```bash
    sudo nixos-rebuild switch
    ```
@@ -714,6 +764,7 @@ To also remove the ability to modify GPU clocks manually:
 If you have AMD or Intel graphics instead of NVIDIA:
 
 1. **Remove the entire NVIDIA configuration section** from `configuration.nix`:
+
    ```nix
    # Remove these sections:
    # services.xserver.videoDrivers = [ "nvidia" ];
@@ -725,11 +776,13 @@ If you have AMD or Intel graphics instead of NVIDIA:
    ```
 
 2. **For AMD graphics, add:**
+
    ```nix
    services.xserver.videoDrivers = [ "amdgpu" ];
    ```
 
 3. **For Intel graphics, add:**
+
    ```nix
    services.xserver.videoDrivers = [ "intel" ];
    ```
@@ -744,6 +797,7 @@ If you want to keep undervolting but adjust the clock speed for your specific GP
    - Online forums and reviews for your specific GPU model
 
 2. **Edit the clock speed** in the systemd service:
+
    ```nix
    ExecStart = "/run/current-system/sw/bin/nvidia-smi -lgc YOUR_SAFE_CLOCK_SPEED";
    ```
@@ -756,6 +810,7 @@ With Coolbits enabled, you can manually control GPU settings using:
 
 - **nvidia-settings** - GUI for GPU configuration
 - **nvidia-smi** - Command line GPU management
+
   ```bash
   nvidia-smi -lgc 1800   # Set graphics clock to 1800 MHz
   nvidia-smi -q          # Query current GPU status
@@ -779,9 +834,9 @@ This configuration includes an *optional* setup for the [Ollama](https://ollama.
 
 If you do not want to build with Ollama, you can disable it with a one-line change.
 
-1.  Open the `configuration.nix` file.
-2.  Find the `imports` section at the top of the file.
-3.  Add a `#` to the beginning of the `./ollama.nix` line to comment it out, like so:
+1. Open the `configuration.nix` file.
+2. Find the `imports` section at the top of the file.
+3. Add a `#` to the beginning of the `./ollama.nix` line to comment it out, like so:
 
     ```nix
     imports = [
@@ -795,7 +850,8 @@ If you do not want to build with Ollama, you can disable it with a one-line chan
       # ./ollama.nix 
     ];
     ```
-4.  Save the file and rebuild your system as normal.
+
+4. Save the file and rebuild your system as normal.
 
 ### Step 1: Clone the Repository
 
@@ -808,25 +864,28 @@ cd ~/nixos-config
 
 My configuration is set up for a machine with the hostname `larry-desktop`. You'll need to change this to match your own.
 
-1.  **Find your hostname:** Run `hostname` in your terminal.
-2.  **Update the flake:** Open `flake.nix` and change `"larry-desktop"` to your hostname.
+1. **Find your hostname:** Run `hostname` in your terminal.
+2. **Update the flake:** Open `flake.nix` and change `"larry-desktop"` to your hostname.
 
 ### Step 3: Configure Environment Variables (Optional - After Build)
 
 If you want to use features that require API keys, you can set them up after building:
 
 1. **Use the interactive script to create your environment file:**
+
    ```bash
    create-env
    ```
 
 2. **Or create the file manually:**
+
    ```bash
    nano ~/.env
    chmod 600 ~/.env
    ```
 
 3. **Load in current session:**
+
    ```bash
    source ~/.env
    ```
@@ -841,15 +900,20 @@ There are two ways to apply this configuration:
 
 This is the most convenient method for managing your system config. It makes your cloned folder the direct source of truth for NixOS.
 
-1.  **Back up your current config:**
+1. **Back up your current config:**
+
     ```bash
     sudo mv /etc/nixos /etc/nixos.bak
     ```
-2.  **Create a symbolic link:**
+
+2. **Create a symbolic link:**
+
     ```bash
     sudo ln -s ~/nixos-config /etc/nixos
     ```
-3.  **Rebuild your system:**
+
+3. **Rebuild your system:**
+
     ```bash
     sudo nixos-rebuild switch
     ```
@@ -867,11 +931,13 @@ sudo nixos-rebuild switch --flake ~/nixos-config#your-hostname
 After rebuilding, test the new development environment system:
 
 1. **Check that dev-init is available:**
+
    ```bash
    dev-init  # Should show available templates
    ```
 
 2. **Test a development environment:**
+
    ```bash
    # Create test project
    mkdir ~/test-ml && cd ~/test-ml
@@ -884,6 +950,7 @@ After rebuilding, test the new development environment system:
    ```
 
 3. **Test environment switching:**
+
    ```bash
    # Leave project directory
    cd ~/
@@ -897,6 +964,7 @@ After rebuilding, test the new development environment system:
    ```
 
 4. **Test VSCode integration:**
+
    ```bash
    # Open project in VSCode
    cd ~/test-ml && code .
@@ -912,6 +980,7 @@ Your system is now configured with automatic maintenance features:
 - **🛠️ Store Optimization**: Automatically deduplicates files to save disk space
 
 **Important Notes:**
+
 - Updates will only apply if your PC is on at the scheduled times, otherwise they'll run at next boot
 - No automatic reboots - you'll need to manually restart for kernel updates
 - Manual cleanup: `sudo nix-collect-garbage -d` (system) and `nix-collect-garbage -d` (home-manager)
@@ -922,39 +991,41 @@ Your system is now configured with automatic maintenance features:
 
 ### Common Issues
 
--   **"flakes are not enabled" error:** If you get this error, you need to enable flakes in your `configuration.nix`. Add the following to your system configuration:
+- **"flakes are not enabled" error:** If you get this error, you need to enable flakes in your `configuration.nix`. Add the following to your system configuration:
+
     ```nix
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     ```
--   **`nixos-rebuild` fails:** The build can fail for many reasons. Carefully read the error output, as it often points to the exact problem.
+
+- **`nixos-rebuild` fails:** The build can fail for many reasons. Carefully read the error output, as it often points to the exact problem.
 
 ### Environment Variable Issues
 
--   **Environment variables not available:** Make sure you've created `~/.env` with your actual API keys and either restarted your shell or run `source ~/.env`.
--   **Script not found:** If `create-env` command isn't found, rebuild your system first to install the script.
--   **Permission denied on .env:** Run `chmod 600 ~/.env` to fix file permissions.
+- **Environment variables not available:** Make sure you've created `~/.env` with your actual API keys and either restarted your shell or run `source ~/.env`.
+- **Script not found:** If `create-env` command isn't found, rebuild your system first to install the script.
+- **Permission denied on .env:** Run `chmod 600 ~/.env` to fix file permissions.
 
 ### Development Environment Issues
 
--   **`dev-init` command not found:** Rebuild your system to install the script: `sudo nixos-rebuild switch`
--   **Environment not loading automatically:** 
-    - Check if direnv is running: `direnv status`
-    - Allow direnv in the project: `direnv allow`
-    - Restart your shell or run `source ~/.bashrc` / `source ~/.zshrc`
--   **Packages not available in development environment:**
-    - Ensure you're in the project directory
-    - Check if `.envrc` exists: `ls -la .envrc`
-    - Reload environment: `direnv reload`
-    - Manually enter environment: `nix develop`
--   **VSCode not detecting Python environment:**
-    - Install direnv extension for VSCode
-    - Restart VSCode after entering project directory
-    - Check Python interpreter path in VSCode settings
--   **Template not found:** Check available templates with `dev-init` (no arguments)
--   **Import errors in development environment:**
-    - Verify environment is active: check your shell prompt
-    - List available packages: `pip list` or `python -c "import sys; print(sys.path)"`
-    - Try manual environment entry: `nix develop`
+- **`dev-init` command not found:** Rebuild your system to install the script: `sudo nixos-rebuild switch`
+- **Environment not loading automatically:**
+  - Check if direnv is running: `direnv status`
+  - Allow direnv in the project: `direnv allow`
+  - Restart your shell or run `source ~/.bashrc` / `source ~/.zshrc`
+- **Packages not available in development environment:**
+  - Ensure you're in the project directory
+  - Check if `.envrc` exists: `ls -la .envrc`
+  - Reload environment: `direnv reload`
+  - Manually enter environment: `nix develop`
+- **VSCode not detecting Python environment:**
+  - Install direnv extension for VSCode
+  - Restart VSCode after entering project directory
+  - Check Python interpreter path in VSCode settings
+- **Template not found:** Check available templates with `dev-init` (no arguments)
+- **Import errors in development environment:**
+  - Verify environment is active: check your shell prompt
+  - List available packages: `pip list` or `python -c "import sys; print(sys.path)"`
+  - Try manual environment entry: `nix develop`
 
 ### Files You Can Safely Modify
 
@@ -985,18 +1056,21 @@ Your system is now configured with automatic maintenance features:
 This NixOS configuration showcases:
 
 ### Core Technologies
+
 - **Declarative System Management** - NixOS with flakes for reproducible builds
 - **Modern Window Manager** - Hyprland Wayland compositor with advanced features
 - **Home Manager Integration** - Comprehensive dotfiles and user configuration management
 - **Mixed Package Sources** - Stable and unstable channel support for latest software
 
 ### Desktop Environment Features
+
 - **Wayland-Native Tools** - Modern alternatives: Waybar, Mako notifications, Wofi launcher
 - **Consistent Theming** - Centralised colour scheme across all applications
 - **Keyboard-Driven Workflow** - Optimised for productivity and minimal mouse usage
 - **Gaming Ready** - Steam, ProtonUp-Qt, and performance optimisations included
 
 ### Developer-Friendly (Phase 2 Architecture)
+
 - **Project-Specific Development Environments** - Isolated, reproducible environments using Nix flakes
 - **Automatic Environment Switching** - Direnv integration for seamless project transitions
 - **80% Faster System Rebuilds** - Development packages moved to project-level flakes
@@ -1012,6 +1086,7 @@ This NixOS configuration showcases:
 Perfect for developers, Linux enthusiasts, and anyone interested in modern declarative system configuration with Wayland desktop environments.
 
 ### GitHub Topics
+
 `nixos` `hyprland` `wayland` `flakes` `home-manager` `catppuccin` `catppuccin-mocha` `linux-desktop` `dotfiles` `declarative-configuration` `wayland-compositor` `nix-flakes` `desktop-environment` `linux-customisation` `system-configuration` `waybar` `kitty-terminal` `developer-tools` `direnv` `development-environment` `reproducible-builds` `project-templates` `python-development` `nodejs-development`
 
 ---
@@ -1019,6 +1094,7 @@ Perfect for developers, Linux enthusiasts, and anyone interested in modern decla
 ## 🙏 Acknowledgements
 
 This configuration wouldn't exist without the incredible work and documentation from the community. Huge thanks to:
+
 - The [NixOS Wiki](https://nixos.wiki/) and its contributors
 - The [Hyprland Wiki](https://wiki.hyprland.org/)
 - The passionate NixOS, Hyprland, and Linux communities on Reddit, Discord, and beyond.

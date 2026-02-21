@@ -3,10 +3,10 @@
 
 {
   # Set the default shell for the user at the system level
-  users.users.lrabbets.shell = pkgs.zsh;
+  users.users.noquarter.shell = pkgs.zsh;
 
   # Home Manager configuration for user environment
-  home-manager.users.lrabbets = {
+  home-manager.users.noquarter = {
     imports = [
       # Catppuccin theming system
       catppuccin.homeModules.catppuccin
@@ -48,6 +48,6 @@
       flavor = "mocha"; # Dark theme - options: latte, frappe, macchiato, mocha
     };
 
-    home.stateVersion = "25.05";
+    home.stateVersion = "25.11";
   };
 }

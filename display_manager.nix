@@ -1,3 +1,5 @@
+# TODO Switch to TUIGEET greetd
+
 # sddm.nix - SDDM Display Manager Configuration with Catppuccin Theme
 { config, pkgs, lib, ... }:
 
@@ -58,7 +60,7 @@ in
 
       # Autologin (disabled by default, uncomment to enable)
       # Autologin = {
-      #   User = "lrabbets";
+      #   User = "noquarter";
       #   Session = "hyprland";
       # };
 

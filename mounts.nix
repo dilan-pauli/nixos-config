@@ -12,16 +12,26 @@ let
   ];
 in
 {
-  # NFS mounts for rabnas (Synology NAS)
-  fileSystems."/mnt/rabnas/data" = {
-    device = "rabnas.home:/volume1/data";
+  # NFS mounts for NAS
+  fileSystems."/mnt/pictures" = {
+    device = "192.168.50.253:/Pictures";
     fsType = "nfs";
-    options = nfsOptions;
+    options = [ 
+      "rw"
+      "vers=4"
+      "_netdev"
+      "bg"
+    ];
   };
 
-  fileSystems."/mnt/rabnas/docker" = {
-    device = "rabnas.home:/volume1/docker";
+  fileSystems."/mnt/media" = {
+    device = "192.168.50.253:/Multimedia";
     fsType = "nfs";
-    options = nfsOptions;
+    options = [ 
+      "rw"
+      "vers=4"
+      "_netdev"
+      "bg"
+    ];
   };
 }
