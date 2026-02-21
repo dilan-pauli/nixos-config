@@ -137,7 +137,6 @@
 
   # Enable gnome-keyring for 1Password secret storage
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
 
   # Enable automatic trim
   services.fstrim.enable = true;
