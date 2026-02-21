@@ -38,7 +38,7 @@
     
     # Essential Development Tools (Unstable - Latest Features)
     (with pkgs-unstable; [
-      claude-code        # AI coding assistant
+      gemini             # AI coding assistant
       python3            # Python interpreter
       uv                 # Python tool runner (pipx alternative)
       nodejs             # JavaScript runtime
@@ -51,7 +51,6 @@
       wl-clipboard       # Wayland clipboard
       cliphist           # Clipboard history manager
       loupe              # Image viewer
-      cider              # Apple Music client
     ]) ++
     
     # Gaming (Unstable - Latest Compatibility)
@@ -60,10 +59,6 @@
       protonup-qt        # Proton version manager
       gamemode           # Game performance optimization
       gamescope          # Gaming compositor
-      vulkan-tools       # Graphics debugging tools
-      prismlauncher      # Minecraft launcher (maintained alternative)
-      wowup-cf           # World of Warcraft addon manager (CurseForge)
-      r2modman           # Thunderstore mod manager (Risk of Rain 2, Lethal Company, etc.)
     ]) ++
     
     # Productivity Applications (Unstable)
